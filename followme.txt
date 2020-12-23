@@ -57,16 +57,19 @@ python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --ba
 2 : cycle GAN(Loss) 사용
 python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=14 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=100 --Lconst_penalty=15 --cycle_gan=True
 
-3 : L1_penalty 상향 적용(2배)
-python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=14 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=200 --Lconst_penalty=15
+3 : L1_penalty 상향 적용(2배) : 42번에서 가동중
+python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=12 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=200 --Lconst_penalty=15
 
 4 : Lconst_penalty 상향 적용(2배)
 python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=14 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=100 --Lconst_penalty=30
 
-5 : 
+5 : Perceptual Loss
+https://gist.github.com/alper111/8233cdb0414b4cb5853f2f730ab95a49#file-vgg_perceptual_loss-py-L18
 
 
-6 : 
+6 : 전처리 crop and centering
+Font2img.py를 파일로 
+ 
 
 
 7 : Ltv_penalty(true_fake_loss) 상향 적용(2배)
