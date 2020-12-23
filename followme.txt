@@ -65,3 +65,11 @@ python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --ba
 
 5 : 
 
+
+6 : 
+
+
+7 : Ltv_penalty(true_fake_loss) 상향 적용(2배)
+
+8 : category_loss(category_loss) 상향 적용(2배)
+
