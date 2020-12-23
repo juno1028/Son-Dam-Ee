@@ -51,10 +51,17 @@ ateam
 
 1. Training 모델
 
-1 : SN-GAN
-python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=28 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=100 --Lconst_penalty=15 --g_norm_type=sn --d_norm_type=sn
+1 : SN-GAN : 57번에서 가동중
+python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=14 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=100 --Lconst_penalty=15 --d_norm_type=sn
 
 2 : cycle GAN(Loss) 사용
+python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=14 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=100 --Lconst_penalty=15 --cycle_gan=True
 
+3 : L1_penalty 상향 적용(2배)
+python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=14 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=200 --Lconst_penalty=15
 
+4 : Lconst_penalty 상향 적용(2배)
+python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=14 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=100 --Lconst_penalty=30
+
+5 : 
 
