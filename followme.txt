@@ -1,0 +1,55 @@
+
+1. Preprocess
+python3 font2img.py --src_font=./fonts/source/NanumGothic.ttf --dst_font=./fonts/target/ --charset=./2350-common-hangul.txt  --sample_count=1000 --sample_dir=dir --filter=1 --shuffle=1
+
+python3 package.py --dir=dir --save_dir=binary_save_directory --split_ratio=0.1
+
+2. Experiment Layout
+
+experiment/
+└── data
+    ├── train.obj
+    └── val.obj
+
+: 이런 파일 구조가 생성되어 있어야한다.
+
+
+3. Train
+
+python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=28 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=100 --Lconst_penalty=15
+
+워크스테이션 42번 : batch_size = 10
+V100 : batch_size = 28
+
+4. Infer and Interpolate - model 생성된 다음에 돌려볼 예정
+
+python infer.py --model_dir=checkpoint_dir/ 
+                --batch_size=16 
+                --source_obj=binary_obj_path 
+                --embedding_ids=label[s] of the font, separate by comma
+                --save_dir=save_dir/
+
+
+(Interpolation)
+python infer.py --model_dir= checkpoint_dir/ 
+                --batch_size=10
+                --source_obj=obj_path 
+                --embedding_ids=label[s] of the font, separate by comma
+                --save_dir=frames/ 
+                --output_gif=gif_path 
+                --interpolate=1 
+                --steps=10
+                --uroboros=1
+
+
+927 1894 9094
+ateam
+
+예은 41,준범 57, 연주 27, 준오 42, 혜원 48
+
+
+
+1. Training 모델
+
+1 : SN-GAN
+python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=28 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=100 --Lconst_penalty=15
