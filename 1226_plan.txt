@@ -1,0 +1,44 @@
+Font-lego 밑에다가 날짜별로 새로운 폴더 추가해서 새로운 pretrain 모델 제작해보자
+지금 : Interpolation 보자!
+
+전이학습 해보기!하하 Transfer Learning
+
+Interpolation도 보자!(SNGAN)
+
+57번 컴퓨터에서
+Checkpoint 폴더를
+41번 컴퓨터로 가져와서
+돌린 다음에
+결과를 확인한다.
+
+
+난사 결과 :
+전처리는 빼는 편이 좀 오류가 덜 난다.
+SN-GAN은 정말 좋다.
+penalty는 웬만하면 바꾸지 말자.
+
+-> 전처리 빼고, SN-GAN 전부 적용
+
+1. Penalty를 epoch 30 넘어가면 바뀌게 학습(jeina 깃헙참고)
+2. Cycle GAN
+3. Self Attention 적용
+4. Perceptual Loss
+
+
+
+
+
+* 정리할 거
+
+1. 기본 모델 돌린 거 : 42번은 점박이, 163번은 좀 나오긴 함(흐물흐물, 이상한 거 나옴)
+1. Lconst_penalty 2배로 늘린 거 : ‘뭬’, ‘튿’ 같은 거 나옴(캡쳐하기)
+2. SN-GAN 적용한 거 : 완벽, 잘 나옴(내 새끼)
+4. 전처리 한 거 : 글자 no 출력(흰 화면, 외않되)
+5. 
+
+
+전부 SN-GAN은 적용(전처리는 전부 적용x?)
+1. 27번 컴퓨터에 SR-GAN(Perceptual Loss 적용)-122601_
+2. 57번 컴퓨터에 Self Attention 적용-
+3. 48번 컴퓨터에 Cycle GAN 적용
+4. 41번 컴퓨터에 Epoch 수 조정하는 거 적용(코드 작성 필요)-
