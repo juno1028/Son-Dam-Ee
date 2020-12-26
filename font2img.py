@@ -1,33 +1,31 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function
 from __future__ import absolute_import
-
+import collections
 import argparse
 import sys
 import numpy as np
 import os
 import glob
 import cv2
-import collections
 from PIL import Image
 from PIL import ImageDraw
 from PIL import ImageFont
 
-    
+
 def draw_single_char(ch, font, canvas_size, x_offset, y_offset ):
     img = Image.new("RGB", (canvas_size, canvas_size), (255, 255, 255)).convert('L')
     draw = ImageDraw.Draw(img)
     draw.text((x_offset, y_offset), ch, (0), font=font)
 
-# 전처리과정
-#     if ch not in special_list : 
-#         img_array = np.array(img)
-#         centered_img_array = centering_image(img_array, canvas_size=128, char_size = 90 , pad_value=None)
-#         img = Image.fromarray(centered_img_array).convert('L')
-    
-#     if is_monochromatic_image(img): 
-#         return None   
-    
+    if ch: 
+        img_array = np.array(img)
+        centered_img_array = centering_image(img_array, canvas_size=128, char_size = 90 , pad_value=None)
+        img = Image.fromarray(centered_img_array).convert('L')
+
+    #if is_monochromatic_image(img): 
+     #   return None   
+
     return img
 
 
@@ -45,7 +43,6 @@ def draw_example(ch, src_font, dst_font, canvas_size, x_offset, y_offset, filter
     example_img.paste(dst_img, (0, 0))
     example_img.paste(src_img, (canvas_size, 0))
     return example_img
-
 
 
 
@@ -121,8 +118,16 @@ def tight_crop_image(img, char_size = 90 ):
             resize_w = char_size
             
         
-        cropped_image = cv2.resize(cropped_image, (resize_h, resize_w)) #,resize크기에 맞춰 재조정
-        cropped_image_size = cropped_image.shape
+        #cropped_image = cv2.resize(cropped_image, (resize_h, resize_w)) #,resize크기에 맞춰 재조정
+        try:
+            #path=os.path.join(args.dst_font, name)
+            #cropped_image =cv2.imread(path, cv2.IMREAD_GRAYSCALE)
+            cropped_image =cv2.resize(cropped_image, (resize_h, resize_w))
+            
+        except Exception as e:
+            print(str(e))
+        
+        #cropped_image_size = cropped_image.shape
 
         
     elif type(char_size) == float:     #resize_fix가 실수형인 경우 
@@ -150,7 +155,6 @@ def add_padding(img, canvas_size=128,  pad_value=None):
     if not pad_value:
         pad_value = img[0][0]
 
-    
     # Adding padding of x axis - left, right
     pad_x_width = (canvas_size - width) // 2
     pad_x = np.full((height, pad_x_width), pad_value, dtype=np.float32)
@@ -166,7 +170,7 @@ def add_padding(img, canvas_size=128,  pad_value=None):
     img = np.concatenate((pad_y, img), axis=0)
     img = np.concatenate((img, pad_y), axis=0)
     # Match to original image size
-    
+
     
     #w,h가 홀수면 
     width = img.shape[1]
@@ -178,7 +182,7 @@ def add_padding(img, canvas_size=128,  pad_value=None):
     if img.shape[1] % 2:
         pad = np.full((height, 1), pad_value, dtype=np.float32)
         img = np.concatenate((pad, img), axis=1)
-    
+        
     return img
 
 
@@ -226,8 +230,7 @@ if __name__ == "__main__":
         font_paths = glob.glob(os.path.join(args.dst_font, name))[0] #폰트명
         dst_font = ImageFont.truetype(font_paths, args.char_size) #폰트를 불러옴 
         font2img(args.src_font, dst_font, charset, args.char_size,
-             args.canvas_size, args.x_offset, args.y_offset,
-              args.sample_dir, args.filter , label = label )
+            args.canvas_size, args.x_offset, args.y_offset,
+            args.sample_dir, args.filter , label = label )
         print("%d fonts"%label)
         label += 1
-

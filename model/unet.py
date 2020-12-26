@@ -16,7 +16,7 @@ from collections import namedtuple
 from .ops import Conv2d, Deconv2d, Lrelu, FC, BatchNorm, Embedding, ConditionalInstanceNorm
 from .ops import InstanceNorm, ConditionalBatchNorm, SpectralNorm
 from .dataset import TrainDataProvider, InjectDataProvider, NeverEndingLoopingProvider
-from .utils import scale_back, merge, save_concat_images
+from .utils import scale_back, merge, save_concat_images, save_image
 from torch.autograd import Variable
 
 class Self_Attn(nn.Module):
@@ -665,6 +665,7 @@ class UNet(nn.Module):
             p = os.path.join(save_dir, "inferred_%04d.png" % count)
             save_concat_images(imgs, img_path=p)
             print("generated images saved at %s" % p)
+        
 
         count = 0
         batch_buffer = list()
@@ -688,6 +689,63 @@ class UNet(nn.Module):
         if batch_buffer:
             # last batch
             save_imgs(batch_buffer, count)
+
+
+    def extract(self, source_obj, embedding_ids, model_dir, save_dir):
+        # set test mode
+        self.generator.eval()
+
+        source_provider = InjectDataProvider(source_obj, rotate_range=self.rotate_range)
+
+        if isinstance(embedding_ids, int) or len(embedding_ids) == 1:
+            embedding_id = embedding_ids if isinstance(embedding_ids, int) else embedding_ids[0]
+            source_iter = source_provider.get_single_embedding_iter(self.batch_size, embedding_id)
+        else:
+            source_iter = source_provider.get_random_embedding_iter(self.batch_size, embedding_ids)
+
+        self.restore_model(model_dir, is_training=False)
+
+        def save_imgs(imgs, count):
+            #p = os.path.join(save_dir, "inferred_%04d.png" % count)
+            #p = os.path.join(save_dir, (extracted_사람번호_글자아스키코드_글자이름.png))
+            #save_concat_images(imgs, img_path=p)
+            for img in imgs:
+                p = os.path.join(save_dir, "extracted_%04d.png" % count)
+                save_image(img, img_path=p)
+                print("generated image saved at %s" % p)
+        
+
+        count = 0
+        batch_buffer = list()
+        
+        for labels, source_imgs in source_iter:
+            #for pytorch input
+            source_imgs = torch.tensor(source_imgs).to(self.device)
+            labels = torch.tensor(labels).to(self.device)
+            
+            with torch.no_grad():
+                self.forward(source_imgs, labels, source_imgs, labels)
+            
+            fake_imgs = self.fake_B.cpu().numpy()
+            #merged_fake_images = merge(scale_back(fake_imgs), [self.batch_size, 1])
+            for fake_img in fake_imgs:
+                batch_buffer.append(fake_img)
+
+            
+            #batch_buffer.append(merged_fake_images)
+            save_imgs(batch_buffer,count)
+            batch_buffer=list()
+            if len(batch_buffer) == 1:
+                save_imgs(batch_buffer, count)
+                batch_buffer = list()
+            count += 1
+        
+        if batch_buffer:
+           # last batch
+            save_imgs(batch_buffer, count)
+
+
+
 
     def interpolate(self, source_obj, between, model_dir, save_dir, steps):
         # set test mode
