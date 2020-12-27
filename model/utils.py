@@ -73,6 +73,10 @@ def save_concat_images(imgs, img_path):
     concated = np.concatenate(imgs, axis=1)
     imageio.imsave(img_path, concated)
 
+#################################################################NEW
+def save_image(img, img_path):
+    imageio.imsave(img_path, img)
+
 
 def compile_frames_to_gif(frame_dir, gif_file):
     frames = sorted(glob.glob(os.path.join(frame_dir, "*.png")))

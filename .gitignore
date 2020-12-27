@@ -1,3 +1,4 @@
-*.png
-*.pt
+*.pth
+binary_save_directory/logs/
 *.obj
+*.png
