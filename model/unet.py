@@ -590,8 +590,8 @@ class UNet(nn.Module):
 
                 if os.path.exists(optimizer_path):
                     optim_state = torch.load(optimizer_path)
-                    self.g_optimizer.load_state_dict(optim_state['generator'],strict=False)
-                    self.d_optimizer.load_state_dict(optim_state['discriminator'],strict=False)
+                    self.g_optimizer.load_state_dict(optim_state['generator'])
+                    self.d_optimizer.load_state_dict(optim_state['discriminator'])
             print("restored model %s" % model_dir)
         else:
             print("fail to restore model %s" % model_dir)
@@ -730,19 +730,21 @@ class UNet(nn.Module):
             #merged_fake_images = merge(scale_back(fake_imgs), [self.batch_size, 1])
             for fake_img in fake_imgs:
                 batch_buffer.append(fake_img)
+                save_imgs(fake_img, count)
+                count += 1
 
             
             #batch_buffer.append(merged_fake_images)
-            save_imgs(batch_buffer,count)
-            batch_buffer=list()
-            if len(batch_buffer) == 1:
-                save_imgs(batch_buffer, count)
-                batch_buffer = list()
-            count += 1
+            # save_imgs(batch_buffer,count)
+            # batch_buffer=list()
+            # if len(batch_buffer) == 1:
+            #     save_imgs(batch_buffer, count)
+            #     batch_buffer = list()
+            # count += 1
         
-        if batch_buffer:
+        # if batch_buffer:
            # last batch
-            save_imgs(batch_buffer, count)
+            # save_imgs(batch_buffer, count)
 
 
 
