@@ -707,7 +707,7 @@ class UNet(nn.Module):
 
         def save_imgs(imgs, count):
             #p = os.path.join(save_dir, "inferred_%04d.png" % count)
-            #p = os.path.join(save_dir, (extracted_사람번호_글자아스키코드_글자이름.png))
+            #p = os.path.join(save_dir, (extracted_사람번호_글자아스키코드.png))
             #save_concat_images(imgs, img_path=p)
             for img in imgs:
                 p = os.path.join(save_dir, "extracted_%04d.png" % count)
