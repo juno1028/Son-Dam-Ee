@@ -19,7 +19,7 @@ experiment/
 
 3. Train
 
-python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=28 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=100 --Lconst_penalty=15
+python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --batch_size=12 --lr=0.001 --epoch=100 --sample_steps=10 --schedule=10 --L1_penalty=100 --Lconst_penalty=15
 
 워크스테이션 42번 : batch_size = 10
 V100 : batch_size = 28
@@ -96,4 +96,23 @@ python3 train.py --experiment_dir=./binary_save_directory --experiment_id=0 --ba
 10.
 
 지금 놀고 있는 컴퓨터 : #41, #48, #57, #27
+
+
+
+김준오 폴더
+
+1253.png
+2314.png
+
+
+아스키코드.png
+
+
+2350 -> 2441 어쩌구
+210 -> 240
+
+Ttf 파일 최소 2350
+
+
+
 
