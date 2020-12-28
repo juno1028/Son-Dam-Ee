@@ -590,8 +590,8 @@ class UNet(nn.Module):
 
                 if os.path.exists(optimizer_path):
                     optim_state = torch.load(optimizer_path)
-                    self.g_optimizer.load_state_dict(optim_state['generator'],strict=False)
-                    self.d_optimizer.load_state_dict(optim_state['discriminator'],strict=False)
+                    self.g_optimizer.load_state_dict(optim_state['generator'])
+                    self.d_optimizer.load_state_dict(optim_state['discriminator'])
             print("restored model %s" % model_dir)
         else:
             print("fail to restore model %s" % model_dir)
