@@ -707,7 +707,7 @@ class UNet(nn.Module):
 
         def save_imgs(imgs, count):
             #p = os.path.join(save_dir, "inferred_%04d.png" % count)
-            #p = os.path.join(save_dir, (extracted_사람번호_글자아스키코드_글자이름.png))
+            #p = os.path.join(save_dir, (extracted_사람번호_글자아스키코드.png))
             #save_concat_images(imgs, img_path=p)
             for img in imgs:
                 p = os.path.join(save_dir, "extracted_%04d.png" % count)
@@ -730,19 +730,21 @@ class UNet(nn.Module):
             #merged_fake_images = merge(scale_back(fake_imgs), [self.batch_size, 1])
             for fake_img in fake_imgs:
                 batch_buffer.append(fake_img)
+                save_imgs(fake_img, count)
+                count += 1
 
             
             #batch_buffer.append(merged_fake_images)
-            save_imgs(batch_buffer,count)
-            batch_buffer=list()
-            if len(batch_buffer) == 1:
-                save_imgs(batch_buffer, count)
-                batch_buffer = list()
-            count += 1
+            # save_imgs(batch_buffer,count)
+            # batch_buffer=list()
+            # if len(batch_buffer) == 1:
+            #     save_imgs(batch_buffer, count)
+            #     batch_buffer = list()
+            # count += 1
         
-        if batch_buffer:
+        # if batch_buffer:
            # last batch
-            save_imgs(batch_buffer, count)
+            # save_imgs(batch_buffer, count)
 
 
 
