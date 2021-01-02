@@ -52,8 +52,7 @@ python3 package.py --dir=source_dir --save_dir=source_save_directory --split_rat
 
 ########################################
 
-워크스테이션 42번 : batch_size = 10
-V100 : batch_size = 28
+
 
 4. Infer and Interpolate - model 생성된 다음에 돌려볼 예정
 
@@ -61,7 +60,7 @@ python infer.py --model_dir=./binary_save_directory/ckpt/0_batch_12 --batch_size
 
 
 (Interpolation)
-python3 infer.py --model_dir=./binary_save_directory/ckpt/0_batch_14 --batch_size=14 --source_obj=./binary_save_directory/val.obj --embedding_ids=1,3 --save_dir=save_dir/frames/ --output_gif=./gif_path --interpolate=1 --steps=3 --uroboros=1
+python3 infer.py --model_dir=./binary_save_directory/ckpt/0_batch_10 --batch_size=10 --source_obj=./source_save_directory/train.obj --embedding_ids=0,3 --save_dir=save_dir/frames/ --output_gif=./gif_path --interpolate=1 --steps=5 --uroboros=1 
 
 #######################################
 
@@ -72,6 +71,8 @@ python3 font2img.py --src_font=./fonts/source/NanumGothic.ttf --dst_font=./fonts
 python3 package.py --dir=source_dir --save_dir=source_save_directory --split_ratio=0
 
 python3 extract.py --model_dir=./binary_save_directory/ckpt/0_batch_12 --batch_size=12 --source_obj=./source_save_directory/train.obj --embedding_ids=28 --save_dir=extracted_dir/
+
+python3 char2uni.py
 
 #######################################
 python infer.py --model_dir= checkpoint_dir/ 
@@ -91,6 +92,8 @@ ateam
 예은 41,준범 57, 연주 27, 준오 42, 혜원 48
 
 
+워크스테이션 42번 : batch_size = 10
+V100 : batch_size = 28
 
 1. Training 모델
 
